@@ -11,6 +11,12 @@ module Rubyonrails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.hosts << ENV["INGRESS_HOST"]
+
+    if Rails.env.development?
+      config.web_console.permissions = "0.0.0.0/0"
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
