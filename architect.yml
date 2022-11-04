@@ -2,6 +2,16 @@ name: my-rails
 description: Example component that includes a Rails application with a postgres backend
 homepage: https://github.com/architect-templates/ruby-on-rails
 
+# Add secrets to be used by different services. For more information:
+# https://docs.architect.io/deployments/secrets/
+secrets:
+  db_name:
+    default: rails
+  db_user:
+    default: postgres
+  db_pass:
+    default: password
+
 services:
   # Name of the Rails service
   rails:
@@ -10,6 +20,7 @@ services:
       context: .
     # Set environment variables for your application here
     environment:
+      DATABASE_URL: ${{ services.database.interfaces.main.url }}
       INGRESS_HOST: ${{ ingresses.main.host }}
       RAILS_ENV: production
       RAILS_LOG_TO_STDOUT: 1 # Consider disabling for production
@@ -33,6 +44,20 @@ services:
           mount_path: /usr/local/bundle/gems
         node-modules:
           mount_path: /myapp/node_modules
+
+  database:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: ${{ secrets.db_name }}
+      POSTGRES_USER: ${{ secrets.db_user }}
+      POSTGRES_PASSWORD: ${{ secrets.db_pass }}
+    interfaces:
+      main:
+        port: 5432
+        protocol: postgresql
+        username: ${{ secrets.db_user }}
+        password: ${{ secrets.db_pass }}
+        path: /${{ secrets.db_name }}
 
 # interfaces are used to expose our application to the gateway, allowing
 #   other services and dependencies to connect to one another.
