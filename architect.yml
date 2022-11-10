@@ -44,6 +44,8 @@ services:
           mount_path: /usr/local/bundle/gems
         node-modules:
           mount_path: /myapp/node_modules
+        tmp:
+          mount_path: /myapp/tmp
 
   database:
     image: postgres:14
