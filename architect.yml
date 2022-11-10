@@ -18,6 +18,10 @@ services:
     # Build context is the location of your application relative to the architect.yml file
     build:
       context: .
+    # We want our app to start up after the db is running so that we can connect to it on startup!
+    # This block contains a list of services we need to start before 'app' starts.
+    depends_on:
+      - database
     # Set environment variables for your application here
     environment:
       DATABASE_URL: ${{ services.database.interfaces.main.url }}
