@@ -25,13 +25,16 @@ services:
     # Set environment variables for your application here
     environment:
       DATABASE_URL: ${{ services.database.interfaces.main.url }}
-      INGRESS_HOST: ${{ ingresses.main.host }}
+      INGRESS_HOST: ${{ services.rails.interfaces.main.ingress.host }}
       RAILS_ENV: production
       RAILS_LOG_TO_STDOUT: 1 # Consider disabling for production
     # Main interface port used to help define the url in the top level `interfaces` block
     interfaces:
       main:
         port: 3000
+        # https://docs.architect.io/components/ingress-rules/
+        ingress:
+          subdomain: app
     # Debug block is used to enable hot-reloading to make real-time changes to an
     #   application while running `architect dev`. For more info, see -
     #   https://docs.architect.io/components/local-configuration/#hot-reloading
@@ -64,13 +67,3 @@ services:
         username: ${{ secrets.db_user }}
         password: ${{ secrets.db_pass }}
         path: /${{ secrets.db_name }}
-
-# interfaces are used to expose our application to the gateway, allowing
-#   other services and dependencies to connect to one another.
-#   For more info - https://docs.architect.io/components/interfaces/
-interfaces:
-  # Interface for our main Rails application
-  main:
-    url: ${{ services.rails.interfaces.main.url }}
-    ingress:
-      subdomain: app
