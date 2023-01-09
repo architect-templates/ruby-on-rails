@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-rm /myapp/tmp/pids/server.pid
+if [ -e /myapp/tmp/pids/server.pid ]; then
+  rm /myapp/tmp/pids/server.pid
+fi
+
 rails db:migrate
 # rails db:seed
 
