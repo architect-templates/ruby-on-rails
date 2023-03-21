@@ -13,7 +13,7 @@
 ---
 
 <p align="center">
-  <a href="//rubyonrails.org" target="blank"><img src="https://rubyonrails.org/assets/images/logo.svg" width="320" alt="Rails Logo" /></a>
+  <a href="//rubyonrails.org" target="blank"><img src="./rails_logo.svg" width="320" alt="Rails Logo" /></a>
 </p>
 
 ---
