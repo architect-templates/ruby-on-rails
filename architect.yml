@@ -64,6 +64,10 @@ services:
       POSTGRES_DB: ${{ secrets.db_name }}
       POSTGRES_USER: ${{ secrets.db_user }}
       POSTGRES_PASSWORD: ${{ secrets.db_pass }}
+    liveness_probe:
+      command: pg_isready -d ${{ secrets.db_name }} -U ${{ secrets.db_user }}
+      interval: 3s
+      failure_threshold: 3
     interfaces:
       main:
         port: 5432

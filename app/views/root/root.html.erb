@@ -1,0 +1,47 @@
+<p align="center" style="padding-top: 2rem">
+  <a href="//architect.io" target="blank">
+    <img
+      src="https://cdn.architect.io/logo/horizontal.png"
+      width="320"
+      alt="Architect Logo"
+    />
+  </a>
+</p>
+
+<div style="margin: 40px">
+  <div class="container">
+    <h1>Favorite Movie</h1>
+    <div class="user_inputs">
+      <%= form_for Item.new, :url => items_path, :html => {:method => :post}  do |form| %>
+        <%= form.text_field :name, class: "form-control", :placeholder => "Name*"  %>
+        <%= form.number_field :rating, class: "form-control", :placeholder => "Rating 1-5*"  %>
+        <div style="margin-top: 5px">
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+
+    <div style="margin-bottom: 10px" id="itemList">
+      <% if @items.length > 0 %>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td><%= item.name %></td>
+                <td><%= item.rating %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No entries found</p>
+      <% end %>
+    </div>
+  </div>
+</div>
