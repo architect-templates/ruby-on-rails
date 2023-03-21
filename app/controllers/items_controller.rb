@@ -6,10 +6,10 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to request.referrer, notice: "Item was successfully created." }
+        format.html { redirect_to :root }
         format.json { render :show, status: :created, location: @item }
       else
-        format.html { redirect_to request.referrer }
+        format.html { redirect_to :root }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
